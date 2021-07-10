@@ -1,0 +1,50 @@
+version: '3.5'
+
+services:
+  front-end:
+    container_name: front-end
+    build:
+      context: ./front-end
+
+      # Points to the dockerfile
+      dockerfile: Dockerfile
+
+    volumes:
+      - './front-end:/app/front-end'
+      - '/app/front-end/node_modules'
+
+    ports:
+      - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+
+  db:
+    image: postgres
+    volumes:
+      # - db:/app/postgresql/data
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+
+  
+  back-end:
+    container_name: back-end
+    build:
+      context: ./back-end
+
+      # Points to the dockerfile
+      dockerfile: Dockerfile
+
+    volumes:
+      - './back-end:/app/back-end'
+      - '/app/back-end/node_modules'
+    depends_on: 
+      - db
+
+    ports:
+      - 4001:4000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+
