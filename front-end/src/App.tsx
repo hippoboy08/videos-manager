@@ -17,7 +17,7 @@ function App() {
             <Redirect exact from="/" to="/dashboard" />
             <Route path="/dashboard" component={DashboardPage} />
             <Route path="/adding" component={AddingPage} />
-            <Route path="/video/:id" component={VideoPage} />
+            <Route path="/videos/:id" component={VideoPage} />
           </Switch>
         </div>
       </Router>

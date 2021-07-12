@@ -6,7 +6,7 @@ const VideoCard: React.FunctionComponent<VideoType> = (props) => {
   const { title, date, id, thumbnail } = props;
   return (
     <Card className="card">
-      <CardLink href={`video/${id}`} className="text-center">
+      <CardLink href={`videos/${id}`} className="text-center">
         <CardImg
           top
           width="100%"
