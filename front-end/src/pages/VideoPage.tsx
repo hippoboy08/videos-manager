@@ -42,8 +42,6 @@ const VideoPage: React.FunctionComponent = () => {
         history.push('/dashboard')
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false)
       }
     }
   }
