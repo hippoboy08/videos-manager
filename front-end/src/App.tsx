@@ -1,26 +1,28 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import DashboardPage from './pages/DashboardPage';
+import AddingPage from './pages/AddingPage';
+import VideoPage from './pages/VideoPage';
+import Header from './components/Header';
+import { Container } from 'reactstrap';
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload neeeeee.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  )
+    <Container>
+      <Router>
+        <div>
+          <Header />
+          <Switch>
+            <Redirect exact from="/" to="/dashboard" />
+            <Route path="/dashboard" component={DashboardPage} />
+            <Route path="/adding" component={AddingPage} />
+            <Route path="/video/:id" component={VideoPage} />
+          </Switch>
+        </div>
+      </Router>
+    </Container>
+  );
 }
 
-export default App
+export default App;
