@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import Loading from '../components/Loading';
 import { apiRoute } from '../config';
 import http from '../http/http';
 import { mapVideoType, VideoType } from '../types';
@@ -11,16 +12,20 @@ const VideoPage: React.FunctionComponent = () => {
   const [video, setVideo] =
     useState<VideoType>();
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const { id } = params;
     const getVideo = async (id: string) => {
       try {
+        setLoading(true)
         const response = await http.get(`${apiRoute.VIDEOS}/${id}`);
-        const mappedData = mapVideoType(response.data);
+        const mappedData = mapVideoType(response.data.data);
         setVideo(mappedData);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -32,16 +37,21 @@ const VideoPage: React.FunctionComponent = () => {
   const handleDelete = async (id: string) => {
     if (id) {
       try {
+        setLoading(true)
         await http.delete(`${apiRoute.VIDEOS}/${id}`);
         history.push('/dashboard')
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false)
       }
     }
   }
 
   return (
     <>
+      <Loading loading={loading}/>
+
       {video && (
         <div className="flex items-center column">
           <Button color="danger" className="mb-30" onClick={() => handleDelete(video.id ?? '')}>Remove Video</Button>
