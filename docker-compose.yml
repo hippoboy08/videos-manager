@@ -23,7 +23,7 @@ services:
     image: postgres
     volumes:
       # - db:/app/postgresql/data
-      - ./tmp/db:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
 
